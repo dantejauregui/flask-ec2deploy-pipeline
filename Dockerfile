@@ -18,5 +18,6 @@ CMD [ "python", "app.py" ]
 # to docker build: docker build --tag dantej/flask-ec2deploy . 
 # to docker run: docker run -d -p 3000:3000 python-docker
 
-# to run JenkinsServer Image using Docker: docker run -p 8080:8080 -p 50000:50000 --restart=on-failure -v jenkins_home:/var/jenkins_home jenkins/jenkins:lts-jdk11
-# para entrar dentro del Jenkins Server he instalar docker y mas:   docker exec -it (CONTAINER-ID) bash
+# to run JenkinsServer Image using Docker: docker run -p 8080:8080 -p 50000:50000 --restart=on-failure -v jenkins_home:/var/jenkins_home -v /var/run/docker.sock:/var/run/docker.sock joseberrocal/jenkins_docker_debian:v1
+# y luego para resolver el problema del root "CANNOT CONNECT TO THE DOCKER DAEMON AT UNIX:/VAR/RUN/DOCKER.SOCK":  chown 1000:1000 /var/run/docker.sock
+# para entrar dentro del Jenkins Server he instalar docker como SUPER USUARIO:     docker exec -u 0 -it (CONTAINER-ID) bash 
