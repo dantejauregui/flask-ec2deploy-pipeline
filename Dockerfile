@@ -19,3 +19,4 @@ CMD [ "python", "app.py" ]
 # to docker run: docker run -d -p 3000:3000 python-docker
 
 # to run JenkinsServer Image using Docker: docker run -p 8080:8080 -p 50000:50000 --restart=on-failure -v jenkins_home:/var/jenkins_home jenkins/jenkins:lts-jdk11
+# para entrar dentro del Jenkins Server he instalar docker y mas: docker exec -it (CONTAINER-ID) bash

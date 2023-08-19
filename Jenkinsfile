@@ -23,26 +23,31 @@ pipeline {
         //         dockerImage = docker.build("dantej/flask-ec2deploy:$BUILD_NUMBER")
         //     }
         // }
-        stage('Build & Upload the Docker Image') {
-            steps {
-                echo 'Build & Upload of Docker...'
-                script {
-                    docker.withRegistry( '', 'dockerhubaccount') {
-                        dockerImage = "dantej/flask-ec2deploy:$BUILD_NUMBER"
 
-                        def customImage = docker.build(dockerImage)
+        // stage('Build & Upload the Docker Image') {
+        //     steps {
+        //         echo 'Build & Upload of Docker...'
+        //         script {
+        //             docker.withRegistry( '', 'dockerhubaccount') {
+        //                 dockerImage = "dantej/flask-ec2deploy:$BUILD_NUMBER"
 
-                        customImage.push()
-                        }
+        //                 def customImage = docker.build(dockerImage)
 
-                    echo 'Build & Upload of Docker Image sucessfully'
-                }
-            }
-        }
-    }
-}
-post {
-        always {
-            sh 'docker logout'
+        //                 customImage.push()
+        //                 }
+
+        //             echo 'Build & Upload of Docker Image sucessfully'
+        //         }
+        //     }
+        // }
+        
+        // stage('Remove Unused Docker Image') {
+        //      steps {
+        //         echo 'Remove Unused Docker Image'
+        //         sh "docker rmi $repodocker:$BUILD_NUMBER"
+        //         sh "docker rmi $repodocker:latest"
+        //          echo 'Remove Unused Docker Image sucessfully'
+        //     }
+        // }
     }
 }
