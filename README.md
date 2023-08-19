@@ -1,1 +1,1 @@
-# flask-ec2deploy-pipeline
+# flask-ec2deploy-pipeline DevOps Project
