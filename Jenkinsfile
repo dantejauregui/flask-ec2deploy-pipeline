@@ -1,6 +1,8 @@
 pipeline {
     environment {
-    repodocker = "dantej/flask-ec2deploy"
+    registry = "dantej/flask-ec2deploy"
+    registryCredential = 'dockerhubaccount'
+    dockerImage = ''
   }
 
     agent any
@@ -16,18 +18,20 @@ pipeline {
         //     steps {
         //     }
         // }
+        stage('Building our image') {
+            steps{
+                script {
+                dockerImage = docker.build registry + ":$BUILD_NUMBER"
+                }
+            }
+        }
 
         stage('Build & Upload the Docker Image') {
             steps {
                 echo 'Build & Upload of Docker...'
                 script {
-                    docker.withRegistry( '', 'dockerhubaccount') {
-                        dockerImage = "dantej/flask-ec2deploy:$BUILD_NUMBER"
-
-                        def customImage = docker.build(dockerImage)
-
-                        customImage.push()
-                        }
+                    docker.withRegistry( '', registryCredential ) {
+                    dockerImage.push()
 
                     echo 'Build & Upload of Docker Image sucessfully'
                 }
@@ -44,3 +48,4 @@ pipeline {
         // }
     }
 }
+
