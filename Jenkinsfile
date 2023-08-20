@@ -26,7 +26,7 @@ pipeline {
             }
         }
 
-        stage('Build & Upload the Docker Image') {
+        stage('Uploading the Docker Image') {
             steps {
                 echo 'Build & Upload of Docker...'
                 script {
@@ -43,7 +43,6 @@ pipeline {
              steps {
                 echo 'Remove Unused Docker Image'
                 sh "docker rmi $registry:$BUILD_NUMBER"
-                sh "docker rmi $registry:latest"
                 echo 'Removed Unused Docker Image sucessfully'
             }
         }
