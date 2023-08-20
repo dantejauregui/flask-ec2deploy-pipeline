@@ -39,14 +39,14 @@ pipeline {
             }
         }    
 
-        // stage('Remove Unused Docker Image') {
-        //      steps {
-        //         echo 'Remove Unused Docker Image'
-        //         sh "docker rmi $repodocker:$BUILD_NUMBER"
-        //         sh "docker rmi $repodocker:latest"
-        //          echo 'Remove Unused Docker Image sucessfully'
-        //     }
-        // }
+        stage('Cleaning up and Removing Unused Docker Image') {
+             steps {
+                echo 'Remove Unused Docker Image'
+                sh "docker rmi $registry:$BUILD_NUMBER"
+                sh "docker rmi $registry:latest"
+                echo 'Removed Unused Docker Image sucessfully'
+            }
+        }
     }
 }
 
