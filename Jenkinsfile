@@ -34,9 +34,10 @@ pipeline {
                     dockerImage.push()
 
                     echo 'Build & Upload of Docker Image sucessfully'
+                    }
                 }
             }
-        }
+        }    
 
         // stage('Remove Unused Docker Image') {
         //      steps {
