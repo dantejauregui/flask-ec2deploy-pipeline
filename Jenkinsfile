@@ -20,32 +20,49 @@ pipeline {
         // }
         stage('Building our image') {
             steps{
-                script {
-                dockerImage = docker.build registry + ":$BUILD_NUMBER"
-                }
+                sh "docker buildx build --platform linux/amd64 -t dantej/flask-ec2deploy:${BUILD_NUMBER} ."
             }
         }
 
         stage('Uploading the Docker Image') {
             steps {
-                echo 'Build & Upload of Docker...'
-                script {
-                    docker.withRegistry( '', registryCredential ) {
-                    dockerImage.push()
+            withCredentials([usernamePassword(credentialsId: 'dockerHub', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
+                sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPassword}"
+                sh "docker push dantej/flask-ec2deploy:${BUILD_NUMBER}"
 
-                    echo 'Build & Upload of Docker Image sucessfully'
-                    }
-                }
+                echo 'Upload of Docker Image sucessfully'
             }
+            
+            // {
+            //     echo 'Build & Upload of Docker...'
+            //     script {
+            //         docker.withRegistry( '', registryCredential ) {
+            //         dockerImage.push()
+
+            //         echo 'Build & Upload of Docker Image sucessfully'
+            //         }
+            //     }
+            // }
         }    
+        // stage('Accessing AWS') {
+        //      steps {
+        //         withCredentials([[
+        //             $class: 'AmazonWebServicesCredentialsBinding',
+        //             credentialsId: 'aws-jenkins-demo',
+        //             accessKeyVariable: 'AWS_ACCESS_KEY_ID',
+        //             secretKeyVariable: 'AWS_ACCESS_ACCESS_KEY']]) {
 
-        stage('Cleaning up and Removing Unused Docker Image') {
-             steps {
-                echo 'Remove Unused Docker Image'
-                sh "docker rmi $registry:$BUILD_NUMBER"
-                echo 'Removed Unused Docker Image sucessfully'
-            }
-        }
+        //                 sh "aws ec2 describe-instances --region=eu-central-1"
+        //         }
+        //     }
+        // }
+        // stage('Cleaning up and Removing Unused Docker Image') {
+        //      steps {
+        //         echo 'Remove Unused Docker Image'
+        //         sh "docker rmi $registry:$BUILD_NUMBER"
+        //         echo 'Removed Unused Docker Image sucessfully'
+        //     }
+        // }
     }
 }
 
