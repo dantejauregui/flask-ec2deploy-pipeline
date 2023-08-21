@@ -32,6 +32,13 @@ pipeline {
 
                 echo 'Upload of Docker Image sucessfully'
                 }}     
+        }
+        stage('Cleaning up and Removing Unused Docker Image') {
+             steps {
+                echo 'Remove Unused Docker Image'
+                sh "docker rmi dantej/flask-ec2deploy:$BUILD_NUMBER"
+                echo 'Removed Unused Docker Image sucessfully'
+            }
         }    
         stage('Accessing AWS') {
              steps {
@@ -45,13 +52,6 @@ pipeline {
                 }
             }
         }
-        // stage('Cleaning up and Removing Unused Docker Image') {
-        //      steps {
-        //         echo 'Remove Unused Docker Image'
-        //         sh "docker rmi $registry:$BUILD_NUMBER"
-        //         echo 'Removed Unused Docker Image sucessfully'
-        //     }
-        // }
     }
 }
 
