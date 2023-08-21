@@ -26,7 +26,7 @@ pipeline {
 
         stage('Uploading the Docker Image') {
             steps {
-            withCredentials([usernamePassword(credentialsId: 'dockerHub', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
+                withCredentials([usernamePassword(credentialsId: 'dockerhubaccount', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
                 sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPassword}"
                 sh "docker push dantej/flask-ec2deploy:${BUILD_NUMBER}"
 
