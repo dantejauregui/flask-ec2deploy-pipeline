@@ -31,8 +31,7 @@ pipeline {
                 sh "docker push dantej/flask-ec2deploy:${BUILD_NUMBER}"
 
                 echo 'Upload of Docker Image sucessfully'
-                }}
-        }        
+                }}     
             
             // {
             //     echo 'Build & Upload of Docker...'
