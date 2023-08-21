@@ -32,30 +32,19 @@ pipeline {
 
                 echo 'Upload of Docker Image sucessfully'
                 }}     
-            
-            // {
-            //     echo 'Build & Upload of Docker...'
-            //     script {
-            //         docker.withRegistry( '', registryCredential ) {
-            //         dockerImage.push()
-
-            //         echo 'Build & Upload of Docker Image sucessfully'
-            //         }
-            //     }
-            // }
         }    
-        // stage('Accessing AWS') {
-        //      steps {
-        //         withCredentials([[
-        //             $class: 'AmazonWebServicesCredentialsBinding',
-        //             credentialsId: 'aws-jenkins-demo',
-        //             accessKeyVariable: 'AWS_ACCESS_KEY_ID',
-        //             secretKeyVariable: 'AWS_ACCESS_ACCESS_KEY']]) {
+        stage('Accessing AWS') {
+             steps {
+                withCredentials([[
+                    $class: 'AmazonWebServicesCredentialsBinding',
+                    credentialsId: 'aws-jenkins-ec2deploy',
+                    accessKeyVariable: 'AWS_ACCESS_KEY_ID',
+                    secretKeyVariable: 'AWS_ACCESS_ACCESS_KEY']]) {
 
-        //                 sh "aws ec2 describe-instances --region=eu-central-1"
-        //         }
-        //     }
-        // }
+                        sh "aws ec2 describe-instances --region=eu-central-1"
+                }
+            }
+        }
         // stage('Cleaning up and Removing Unused Docker Image') {
         //      steps {
         //         echo 'Remove Unused Docker Image'
