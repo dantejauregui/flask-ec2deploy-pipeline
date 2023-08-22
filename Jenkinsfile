@@ -49,7 +49,7 @@ pipeline {
                     secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
 
                         sh "aws ec2 describe-instances --region=eu-central-1"
-                        sh "aws ec2-instance-connect ssh --instance-id i-079771c6f5b0ffa83"
+                        sh "aws ec2-instance-connect ssh --instance-id i-079771c6f5b0ffa83 --region eu-central-1 --instance-os-user ec2-user"
                         sh "sleep 500"
                         sh "docker ps"
                 }
