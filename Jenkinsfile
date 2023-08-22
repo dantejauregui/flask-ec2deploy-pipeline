@@ -46,12 +46,13 @@ pipeline {
                     $class: 'AmazonWebServicesCredentialsBinding',
                     credentialsId: 'aws-jenkins-ec2deploy',
                     accessKeyVariable: 'AWS_ACCESS_KEY_ID',
-                    secretKeyVariable: 'AWS_ACCESS_ACCESS_KEY']]) {
+                    secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
 
                         sh "aws ec2 describe-instances --region=eu-central-1"
                 }
             }
         }
+        
     }
 }
 
