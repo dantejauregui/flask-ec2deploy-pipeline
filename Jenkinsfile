@@ -49,9 +49,20 @@ pipeline {
                     secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
 
                         sh "aws ec2 describe-instances --region=eu-central-1"
+                        sh "ssh ec2-user@ec2-35-159-41-7.eu-central-1.compute.amazonaws.com"
+                        sh "sleep 500"
+                        sh "docker ps"
                 }
             }
         }
+        // stage('Pulling Docker Image from  EC2') {
+        //      steps {
+        //         echo 'Connecting to EC2 and pulling '
+        //         sh "ssh -i "flask-ec2deploy.pem" ec2-user@ec2-35-159-41-7.eu-central-1.compute.amazonaws.com"
+        //         sh "docker rmi dantej/flask-ec2deploy:$BUILD_NUMBER"
+        //         echo 'Removed Unused Docker Image sucessfully'
+        //     }
+        // }  
         
     }
 }
