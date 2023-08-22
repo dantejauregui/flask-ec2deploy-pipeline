@@ -12,6 +12,10 @@ pipeline {
             steps {
                  echo 'Test the Jenkinsfile'
                  echo 'Test the Jenkinsfile successfully'
+
+                 sh 'ssh -tt dante@35.159.41.7'
+                 sh "sleep 200"
+                 sh "12345"
             }
         }
 
@@ -39,28 +43,28 @@ pipeline {
         //     }
         // }  
 
-        stage('Running AWS cli commands') {
-             steps {
-                withCredentials([[
-                    $class: 'AmazonWebServicesCredentialsBinding',
-                    credentialsId: 'aws-jenkins-ec2deploy',
-                    accessKeyVariable: 'AWS_ACCESS_KEY_ID',
-                    secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
+        // stage('Running AWS cli commands') {
+        //      steps {
+        //         withCredentials([[
+        //             $class: 'AmazonWebServicesCredentialsBinding',
+        //             credentialsId: 'aws-jenkins-ec2deploy',
+        //             accessKeyVariable: 'AWS_ACCESS_KEY_ID',
+        //             secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
 
-                        sh "aws ec2 describe-instances --region=eu-central-1"
-                }
-            }
-        } 
+        //                 sh "aws ec2 describe-instances --region=eu-central-1"
+        //         }
+        //     }
+        // } 
         
-        stage('Accessing AWS internal console') {
-             steps {
-                withCredentials([string(credentialsId: 'ec2-access-id', variable: 'SECRET')]) { //set SECRET with the credential content
-                    sh 'ssh -tt dante@35.159.41.7'
-                    sh "sleep 200"
-                    sh "${SECRET}"
-                } 
-            }
-        }
+        // stage('Accessing AWS internal console') {
+        //      steps {
+        //         withCredentials([string(credentialsId: 'ec2-access-id', variable: 'SECRET')]) { //set SECRET with the credential content
+        //             sh 'ssh -tt dante@35.159.41.7'
+        //             sh "sleep 200"
+        //             sh "${SECRET}"
+        //         } 
+        //     }
+        // }
 
         
     }
