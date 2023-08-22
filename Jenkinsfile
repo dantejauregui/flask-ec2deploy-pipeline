@@ -56,7 +56,8 @@ pipeline {
              steps {
                 withCredentials([string(credentialsId: 'ec2-access-id', variable: 'SECRET')]) { //set SECRET with the credential content
                     sh 'ssh -tt dante@35.159.41.7'
-
+                    sh "sleep 200"
+                    sh "${SECRET}"
                 } 
             }
         }
