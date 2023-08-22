@@ -55,7 +55,7 @@ pipeline {
         stage('Accessing AWS internal console') {
              steps {
                 withCredentials([string(credentialsId: 'ec2-access-id', variable: 'SECRET')]) { //set SECRET with the credential content
-                    sh 'ssh -tt dante@35.159.41.7'
+                    sh 'ssh dante@35.159.41.7'
                     sh "sleep 100"
                     sh "${SECRET}"
                     sh "sleep 400"
