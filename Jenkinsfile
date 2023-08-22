@@ -39,7 +39,7 @@ pipeline {
         //     }
         // }  
 
-        stage('Accessing AWS') {
+        stage('Running AWS cli commands') {
              steps {
                 withCredentials([[
                     $class: 'AmazonWebServicesCredentialsBinding',
@@ -48,13 +48,21 @@ pipeline {
                     secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
 
                         sh "aws ec2 describe-instances --region=eu-central-1"
-                        sh "aws ec2-instance-connect ssh --instance-id i-079771c6f5b0ffa83 --region eu-central-1"
-                        sh "sleep 500"
-                        sh "docker ps"
                 }
             }
         } 
         
+        stage('Accessing AWS internal console') {
+             steps {
+                sshagent(credentials : ['ec2-user-id']){
+
+                    sh "ssh ec2-user@ec2-35-159-41-7.eu-central-1.compute.amazonaws.com"
+                    sh "sleep 300"
+                    sh "docker ps"
+
+                }
+            }
+        } 
     }
 }
 
