@@ -55,10 +55,9 @@ pipeline {
         stage('Accessing AWS internal console') {
              steps {
                 withCredentials([sshUserPrivateKey(credentialsId: "ec2-user-id", keyFileVariable: 'keyfile')]) {
-                    sh "scp -i ${keyfile} -tt ec2-user@ec2-35-159-41-7.eu-central-1.compute.amazonaws.com"
+                    sh "scp -i ${keyfile} ec2-user@ec2-35-159-41-7.eu-central-1.compute.amazonaws.com"
 
                     sh "sleep 20"
-                    sh 'hostnamectl'
                     sh "docker ps"
                 } 
             }
