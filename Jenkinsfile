@@ -12,10 +12,6 @@ pipeline {
             steps {
                  echo 'Test the Jenkinsfile'
                  echo 'Test the Jenkinsfile successfully'
-
-                 sh 'ssh -tt dante@35.159.41.7'
-                 sh "sleep 200"
-                 sh "12345"
             }
         }
 
@@ -56,15 +52,16 @@ pipeline {
         //     }
         // } 
         
-        // stage('Accessing AWS internal console') {
-        //      steps {
-        //         withCredentials([string(credentialsId: 'ec2-access-id', variable: 'SECRET')]) { //set SECRET with the credential content
-        //             sh 'ssh -tt dante@35.159.41.7'
-        //             sh "sleep 200"
-        //             sh "${SECRET}"
-        //         } 
-        //     }
-        // }
+        stage('Accessing AWS internal console') {
+             steps {
+                withCredentials([sshUserPrivateKey(credentialsId: "ec2-user-id", keyFileVariable: 'keyfile')]) {
+                    sh "scp -i ${keyfile} -tt ec2-user@ec2-35-159-41-7.eu-central-1.compute.amazonaws.com"
+
+                    sh "sleep 300"
+                    sh "docker ps"
+                } 
+            }
+        }
 
         
     }
