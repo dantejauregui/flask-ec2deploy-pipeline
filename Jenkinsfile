@@ -57,7 +57,7 @@ pipeline {
         stage('Accessing AWS internal console') {
              steps {
                 //In order ssh connects to EC2 without pemfile I create a key-gen in the Jenkins Server (local), then i access inside EC2 and in his .ssh folder I inserted my public key i generated locally. Follow the case 2 of this video: https://www.youtube.com/watch?v=iat49yLS9dk&t=301s
-                sh "ssh -tt ec2-user@ec2-3-68-216-106.eu-central-1.compute.amazonaws.com -- 'docker ps && docker kill $(docker ps -q)' "
+                sh "ssh -tt ec2-user@ec2-3-68-216-106.eu-central-1.compute.amazonaws.com 'docker ps && docker kill \$(docker ps -q)' "
 
                 echo 'Image in ec2 deleted'
 
