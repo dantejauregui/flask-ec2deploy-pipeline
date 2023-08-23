@@ -13,10 +13,10 @@ pipeline {
                  echo 'Test the Jenkinsfile'
                  echo 'Test the Jenkinsfile successfully'
 
-                 sh "ssh -T ec2-user@ec2-3-68-83-179.eu-central-1.compute.amazonaws.com"
+                 sh "ssh -t ec2-user@ec2-3-68-83-179.eu-central-1.compute.amazonaws.com 'docker ps' "
 
-                 sh "sleep 5"
-                 sh "docker ps"
+                //  sh "sleep 5"
+                //  sh "docker ps"
             }
         }
 
