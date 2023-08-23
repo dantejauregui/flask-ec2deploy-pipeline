@@ -12,11 +12,6 @@ pipeline {
             steps {
                  echo 'Test the Jenkinsfile'
                  echo 'Test the Jenkinsfile successfully'
-
-                 sh "ssh -tt ec2-user@ec2-3-68-83-179.eu-central-1.compute.amazonaws.com 'docker ps' "
-
-                //  sh "sleep 5"
-                //  sh "docker ps"
             }
         }
 
@@ -59,16 +54,17 @@ pipeline {
         
 
 
-        // stage('Accessing AWS internal console') {
-        //      steps {
-        //         withCredentials([sshUserPrivateKey(credentialsId: "ec2-user-id", keyFileVariable: 'keyfile')]) {
-        //             sh "ssh ec2-user@ec2-35-159-41-7.eu-central-1.compute.amazonaws.com"
+        stage('Accessing AWS internal console') {
+             steps {
+                //In order ssh connects to EC2 without pemfile I create a key-gen in the Jenkins Server (local), then i access inside EC2 and in his .ssh folder I inserted my public key i generated locally. Follow the case 2 of this video: https://www.youtube.com/watch?v=iat49yLS9dk&t=301s
+                sh "ssh -tt ec2-user@ec2-3-68-83-179.eu-central-1.compute.amazonaws.com 'docker ps && docker stop $(docker ps -aq) && docker rm $(docker ps -aq) && docker rmi $(docker images -q) && logout' "
 
-        //             sh "sleep 15"
-        //             sh "docker ps"
-        //         } 
-        //     }
-        // }
+                echo 'Image in ec2 deleted'
+
+                //docker pull de new tag
+                //docker run de new tag with:  docker run -d -p 80:3000 dantej/flask-ec2deploy:34
+            }
+        }
 
         
     }
