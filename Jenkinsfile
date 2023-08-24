@@ -44,15 +44,12 @@ pipeline {
         //     }
         // } 
         
-        stage('Accessing AWS internal console') {
+        stage('Accessing EC2 and deploying new Image') {
              steps {
                 //In order ssh connects to EC2 without pemfile I create a key-gen in the Jenkins Server (local), then i access inside EC2 and in his .ssh folder I inserted my public key i generated locally. Follow the case 2 of this video: https://www.youtube.com/watch?v=iat49yLS9dk&t=301s
                 sh "ssh -tt ec2-user@ec2-3-68-216-106.eu-central-1.compute.amazonaws.com 'docker ps && docker kill \$(docker ps -q) && docker rm \$(docker ps -aq) && docker rmi \$(docker images -q) && docker pull dantej/flask-ec2deploy:${BUILD_NUMBER} && docker run -d -p 80:3000 dantej/flask-ec2deploy:${BUILD_NUMBER}' "
 
-                echo 'Image in ec2 updated'
-
-                //docker pull de new tag
-                //docker run de new tag with:  docker run -d -p 80:3000 dantej/flask-ec2deploy:34
+                echo 'Image in ec2 deployed'
             }
         }
 
