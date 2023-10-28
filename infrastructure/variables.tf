@@ -1,29 +1,23 @@
-variable "aws_region" {
-  description = "The AWS region to create things in."
-  default     = "us-east-2"
+variable "vpc_cidr_block" {
+    # default = "10.0.0.0/16"
+    description = "CIDR Block for the VPC"
+    type = string
 }
 
-variable "key_name" {
-  description = " SSH keys to connect to ec2 instance"
-  default     =  "myJune2021Key"
+variable "web_subnet" {
+    # default = "10.0.10.0/24"
+    description = "Web Subnet"
+    type = string
 }
 
-variable "instance_type" {
-  description = "instance type for ec2"
-  default     =  "t2.micro"
+variable "subnet_zone" {
+  
 }
 
-variable "security_group" {
-  description = "Name of security group"
-  default     = "my-jenkins-security-group"
+variable "main_vpc_name" {
+  
 }
 
-variable "tag_name" {
-  description = "Tag Name of for Ec2 instance"
-  default     = "my-ec2-instance"
-}
-
-variable "ami_id" {
-  description = "AMI for Ubuntu Ec2 instance"
-  default     = "ami-0b9064170e32bde34"
+variable "ssh_public_ip" {
+  
 }
